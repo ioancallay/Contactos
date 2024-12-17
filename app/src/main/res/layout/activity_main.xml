@@ -168,14 +168,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_edita"
+                android:id="@+id/btn_editar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Editar" />
 
             <Button
-                android:id="@+id/btn_eliminar"
+                android:id="@+id/btn_borrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -203,7 +203,7 @@
                 android:text="Listado de personas"
                 android:textAlignment="center"
                 android:textColor="#2196F3"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -212,6 +212,7 @@
             android:orientation="horizontal">
 
             <ListView
+                android:id="@+id/lista_personas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
