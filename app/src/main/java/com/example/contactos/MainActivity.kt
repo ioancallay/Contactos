@@ -81,7 +81,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Ingrese su contraseña", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    Toast.makeText(applicationContext, "Guardado", Toast.LENGTH_SHORT).show()
+                    insertar()
+                    //Toast.makeText(applicationContext, "Guardado", Toast.LENGTH_SHORT).show()
                     limpiaCajas()
                     desactivarCajas()
                     desactivarBotones()
@@ -175,33 +176,6 @@ class MainActivity : AppCompatActivity() {
         txtPassword.isEnabled = true
     }
 
-    fun guardar(){
-        if(txtNombre.equals("")){
-            Toast.makeText(applicationContext, "Ingrese su nombre", Toast.LENGTH_SHORT).show()
-        }
-
-        if(txtApellido.equals("")){
-            Toast.makeText(applicationContext, "Ingrese su apellido", Toast.LENGTH_SHORT).show()
-        }
-
-        if(txtCedula.equals("")){
-            Toast.makeText(applicationContext, "Ingrese su número de cedula", Toast.LENGTH_SHORT).show()
-        }
-
-        if(txtEmail.equals("")){
-            Toast.makeText(applicationContext, "Ingrese su correo", Toast.LENGTH_SHORT).show()
-        }
-
-        if(txtPassword.equals("")){
-            Toast.makeText(applicationContext, "Ingrese su contraseña", Toast.LENGTH_SHORT).show()
-        }
-
-        Toast.makeText(applicationContext, "Guardado", Toast.LENGTH_SHORT).show()
-        limpiaCajas()
-        desactivarCajas()
-        desactivarBotones()
-    }
-
     private fun consultar(){
         val intrapersonal = ArrayList<String>()
         val apis = "http://10.0.2.2/ws_agenda/persona.php"
@@ -237,7 +211,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun editar(codigo:String){
-        val intrapersonal = ArrayList<String>()
         val apis = "http://10.0.2.2/ws_agenda/persona.php"
         val campos = JSONObject()
         campos.put("accion", "dato")
@@ -271,5 +244,33 @@ class MainActivity : AppCompatActivity() {
         rq.add(jsoresp)
     }
 
-    private fun insertar(){}
+    private fun insertar(){
+        val apis = "http://10.0.2.2/ws_agenda/persona.php"
+        val campos = JSONObject()
+        campos.put("accion", "insertar")
+        campos.put("nombre", txtNombre.text.toString())
+        campos.put("apellido", txtApellido.text.toString())
+        campos.put("cedula", txtCedula.text.toString())
+        campos.put("email", txtEmail.text.toString())
+        campos.put("clave", txtPassword.text.toString())
+
+        val rq = Volley.newRequestQueue(this)
+        val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos,
+            {
+                    s->
+            try {
+                val obj=(s)
+                if (obj.getBoolean("estado")){
+                    Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                }
+                else{
+                    Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                }
+            } catch (e: JSONException){
+                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
+            }
+            },
+            { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
+        rq.add(jsoresp)
+    }
 }
