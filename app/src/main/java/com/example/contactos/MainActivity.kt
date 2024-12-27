@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         btnCancelar.setOnClickListener {
             limpiaCajas()
+            desactivarBotones()
         }
 
         btnNuevo.setOnClickListener {
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         listaPersona.setOnItemClickListener{adapterView, view, i, l->
             Toast.makeText(applicationContext, codigos[i], Toast.LENGTH_SHORT).show()
             editar(codigos[i])
-            activarBotones()
+            editarBotones()
             activarCajas()
         }
         btnGuardar.setOnClickListener {
@@ -121,6 +123,12 @@ class MainActivity : AppCompatActivity() {
         btnEditar.isEnabled = false
         btnBorrar.isEnabled = false
         btnCancelar.isEnabled = false
+
+        btnNuevo.isVisible = true
+        btnGuardar.isVisible = false
+        btnEditar.isVisible = false
+        btnBorrar.isVisible = false
+        btnCancelar.isVisible = false
     }
 
     fun activarBotones(){
@@ -129,6 +137,26 @@ class MainActivity : AppCompatActivity() {
         btnEditar.isEnabled = true
         btnBorrar.isEnabled = true
         btnCancelar.isEnabled = true
+
+        btnNuevo.isVisible = false
+        btnGuardar.isVisible = true
+        btnEditar.isVisible = false
+        btnBorrar.isVisible = false
+        btnCancelar.isVisible = true
+    }
+
+    fun editarBotones(){
+        btnNuevo.isEnabled = false
+        btnGuardar.isEnabled = false
+        btnEditar.isEnabled = true
+        btnBorrar.isEnabled = true
+        btnCancelar.isEnabled = true
+
+        btnNuevo.isVisible = false
+        btnGuardar.isVisible = false
+        btnEditar.isVisible = true
+        btnBorrar.isVisible = true
+        btnCancelar.isVisible = true
     }
 
     fun desactivarCajas(){
@@ -223,6 +251,7 @@ class MainActivity : AppCompatActivity() {
                     if(obj.getBoolean("estado")){
                         val array = obj.getJSONArray("data")
                         val dato = array.getJSONObject(0)
+                        //val dato = obj.getJSONObject(0)
                         txtNombre.setText(dato.getString("nombre"))
                         txtApellido.setText(dato.getString("apellido"))
                         txtCedula.setText(dato.getString("cedula"))
@@ -231,11 +260,11 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     else{
-                        Toast.makeText(applicationContext, obj.getBoolean("response").toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, obj.getBoolean("response").toString(), Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException){
-                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
                 }
             },
             { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
