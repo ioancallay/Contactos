@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                     limpiaCajas()
                     desactivarCajas()
                     desactivarBotones()
+                    consultar()
                 }
             }
         }
@@ -251,7 +252,7 @@ class MainActivity : AppCompatActivity() {
         campos.put("nombre", txtNombre.text.toString())
         campos.put("apellido", txtApellido.text.toString())
         campos.put("cedula", txtCedula.text.toString())
-        campos.put("email", txtEmail.text.toString())
+        campos.put("correo", txtEmail.text.toString())
         campos.put("clave", txtPassword.text.toString())
 
         val rq = Volley.newRequestQueue(this)
