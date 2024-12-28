@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnBorrar: Button
     lateinit var btnCancelar: Button
 
+    lateinit var txtCodigo: EditText
     lateinit var txtNombre: EditText
     lateinit var txtApellido: EditText
     lateinit var txtCedula: EditText
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var txtPassword: EditText
     lateinit var listaPersona: ListView
     val codigos = ArrayList<String>()
+    val apis:String = "https://agenda.ioasystem.com/persona.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,10 +93,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        btnEditar.setOnClickListener{
+            actualizar(txtCodigo.text.toString())
+            limpiaCajas()
+            desactivarCajas()
+            consultar()
+        }
+
+        btnBorrar.setOnClickListener {
+            eliminar(txtCodigo.text.toString())
+            limpiaCajas()
+            desactivarCajas()
+            consultar()
+        }
+
     }
 
     fun mapeo(){
 
+        txtCodigo = findViewById(R.id.txt_codigo)
         txtNombre = findViewById(R.id.txt_nombre)
         txtApellido = findViewById(R.id.txt_apellido)
         txtCedula = findViewById(R.id.txt_cedula)
@@ -110,6 +127,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun limpiaCajas(){
+        txtCodigo.setText("")
         txtCedula.setText("")
         txtNombre.setText("")
         txtApellido.setText("")
@@ -162,6 +180,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun desactivarCajas(){
+        //txtCodigo.isVisible = false
         txtNombre.isEnabled = false
         txtApellido.isEnabled = false
         txtCedula.isEnabled = false
@@ -170,6 +189,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun activarCajas(){
+        //txtCodigo.isVisible = false
         txtNombre.isEnabled = true
         txtApellido.isEnabled = true
         txtCedula.isEnabled = true
@@ -179,7 +199,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun consultar(){
         val intrapersonal = ArrayList<String>()
-        val apis = "http://10.0.2.2/ws_agenda/persona.php"
+        //val apis = "http://10.0.2.2/ws_agenda/persona.php"
         val campos = JSONObject()
         campos.put("accion", "consultar")
         val rq = Volley.newRequestQueue(this)
@@ -192,7 +212,7 @@ class MainActivity : AppCompatActivity() {
                         val array = obj.getJSONArray("data")
                         for(i in 0..<array.length()){
                             val fila = array.getJSONObject(i)
-                            intrapersonal.add(fila.getString("cedula") + " " + fila.getString("nombre") + " " + fila.getString("apellido"))
+                            intrapersonal.add(fila.getString("cedula") + "\nNombre: " + fila.getString("nombre") + " " + fila.getString("apellido") + "\nCorreo: " + fila.getString("correo"))
                             codigos.add(fila.getString("codigo"))
                         }
                         val adapterList = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, intrapersonal)
@@ -212,7 +232,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun editar(codigo:String){
-        val apis = "http://10.0.2.2/ws_agenda/persona.php"
+        //val apis = "http://10.0.2.2/ws_agenda/persona.php"
+        txtCodigo.setText(codigo)
         val campos = JSONObject()
         campos.put("accion", "dato")
         campos.put("codigo", codigo)
@@ -246,7 +267,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insertar(){
-        val apis = "http://10.0.2.2/ws_agenda/persona.php"
+        //val apis = "http://10.0.2.2/ws_agenda/persona.php"
         val campos = JSONObject()
         campos.put("accion", "insertar")
         campos.put("nombre", txtNombre.text.toString())
@@ -262,16 +283,67 @@ class MainActivity : AppCompatActivity() {
             try {
                 val obj=(s)
                 if (obj.getBoolean("estado")){
-                    Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: JSONException){
-                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
             }
             },
-            { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
+            { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_SHORT).show() })
+        rq.add(jsoresp)
+    }
+
+    private fun actualizar(codigo: String){
+        val campos = JSONObject()
+        campos.put("accion", "actualizar")
+        campos.put("codigo", codigo)
+        campos.put("nombre", txtNombre.text.toString())
+        campos.put("apellido", txtApellido.text.toString())
+        campos.put("cedula", txtCedula.text.toString())
+        campos.put("correo", txtEmail.text.toString())
+        campos.put("clave", txtPassword.text.toString())
+
+        val rq = Volley.newRequestQueue(this)
+        val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos, {
+            s->
+            try {
+                val obj = (s)
+                if (obj.getBoolean("estado")){
+                    Toast.makeText(applicationContext, obj.getString("response"), Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(applicationContext, obj.getString("response"), Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: JSONException){
+                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
+            }
+        },
+            {volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_SHORT).show()})
+        rq.add(jsoresp)
+    }
+
+    private fun eliminar(codigo: String){
+        val campos = JSONObject()
+        campos.put("accion", "eliminar")
+        campos.put("codigo", codigo)
+        val rq = Volley.newRequestQueue(this)
+        val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos, {
+            s->
+            try {
+                val obj = (s)
+                if (obj.getBoolean("estado")){
+                    Toast.makeText(applicationContext, obj.getString("response"), Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(applicationContext, obj.getString("response"), Toast.LENGTH_SHORT).show()
+                }
+            }
+            catch (e: JSONException){
+                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
+            }
+        },
+            {volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_SHORT).show()})
         rq.add(jsoresp)
     }
 }
