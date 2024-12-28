@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -101,10 +102,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnBorrar.setOnClickListener {
-            eliminar(txtCodigo.text.toString())
-            limpiaCajas()
-            desactivarCajas()
-            consultar()
+            confirmaEliminar()
         }
 
     }
@@ -180,7 +178,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun desactivarCajas(){
-        //txtCodigo.isVisible = false
+        txtCodigo.isVisible = false
         txtNombre.isEnabled = false
         txtApellido.isEnabled = false
         txtCedula.isEnabled = false
@@ -189,7 +187,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun activarCajas(){
-        //txtCodigo.isVisible = false
+        txtCodigo.isVisible = false
         txtNombre.isEnabled = true
         txtApellido.isEnabled = true
         txtCedula.isEnabled = true
@@ -198,6 +196,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun consultar(){
+        codigos.clear()
         val intrapersonal = ArrayList<String>()
         //val apis = "http://10.0.2.2/ws_agenda/persona.php"
         val campos = JSONObject()
@@ -324,6 +323,23 @@ class MainActivity : AppCompatActivity() {
         rq.add(jsoresp)
     }
 
+    fun confirmaEliminar(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Advertencia")
+        builder.setMessage("Esta seguro que desea eliminar este registro")
+        builder.setPositiveButton(android.R.string.yes){ dialog, which->
+            eliminar(txtCodigo.text.toString())
+            limpiaCajas()
+            desactivarCajas()
+            consultar()
+
+        }
+        builder.setNeutralButton(android.R.string.no){
+                dialog, which->
+            Toast.makeText(applicationContext, android.R.string.no, Toast.LENGTH_SHORT).show()
+        }
+        builder.show()
+    }
     private fun eliminar(codigo: String){
         val campos = JSONObject()
         campos.put("accion", "eliminar")
