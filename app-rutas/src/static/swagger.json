@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Ducomentation for the Group 1",
+    "description": "API documentation for the best route",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "paths": {
+    "/api/route": {
+      "post": {
+        "tags": ["Route API"],
+        "summary": "Calcular la mejor ruta entre dos ubicaciones",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "example": "A"
+                },
+                "end": {
+                  "type": "string",
+                  "example": "L"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "La mejor ruta en formato JSON"
+          },
+          "400": {
+            "description": "Error en los parámetros proporcionados"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/route_image": {
+      "post": {
+        "tags": ["Route Image API"],
+        "summary": "Obtener la imagen de la mejor ruta entre dos ubicaciones",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["image/png"],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "example": "A"
+                },
+                "end": {
+                  "type": "string",
+                  "example": "L"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Imagen de la mejor ruta en formato PNG"
+          },
+          "400": {
+            "description": "Error en los parámetros proporcionados"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    }
+  }
+}
