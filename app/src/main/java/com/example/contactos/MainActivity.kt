@@ -105,6 +105,8 @@ class MainActivity : AppCompatActivity() {
             confirmaEliminar()
         }
 
+        txtCedula.setOnFocusChangeListener { view, b ->  }
+
     }
 
     fun mapeo(){
@@ -219,11 +221,33 @@ class MainActivity : AppCompatActivity() {
                         adapterList.notifyDataSetChanged()
                     }
                     else{
-                        Toast.makeText(applicationContext, obj.getBoolean("response").toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException){
                     Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
+                }
+            },
+            { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
+        rq.add(jsoresp)
+    }
+    private fun verificar_cedula(cedula:String){
+
+        val campos = JSONObject()
+        campos.put("accion", "verificar_cedula")
+        campos.put("codigo", cedula)
+        val rq = Volley.newRequestQueue(this)
+        val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos,
+            {
+                    s->
+                try {
+                    val obj = (s)
+                    if(obj.getBoolean("estado")){
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                    }
+
+                } catch (e: JSONException){
+                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
                 }
             },
             { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
@@ -254,7 +278,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     else{
-                        Toast.makeText(applicationContext, obj.getBoolean("response").toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
                     }
 
                 } catch (e: JSONException){
