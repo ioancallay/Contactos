@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var listaPersona: ListView
     val codigos = ArrayList<String>()
     val apis:String = "https://agenda.ioasystem.com/persona.php"
+    //val apis:String = "http://ws_agenda.test/persona.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,8 +106,13 @@ class MainActivity : AppCompatActivity() {
             confirmaEliminar()
         }
 
-        txtCedula.setOnFocusChangeListener { view, b ->  }
+        txtCedula.setOnFocusChangeListener { view, b ->
+            verificar_cedula(txtCedula.text.toString())
+        }
 
+        txtEmail.setOnFocusChangeListener { view, b ->
+            verificar_correo(txtEmail.text.toString())
+        }
     }
 
     fun mapeo(){
@@ -135,6 +141,15 @@ class MainActivity : AppCompatActivity() {
         txtPassword.setText("")
         desactivarBotones()
         desactivarCajas()
+    }
+
+    fun limpiaDatos(){
+        txtCodigo.setText("")
+        txtCedula.setText("")
+        txtNombre.setText("")
+        txtApellido.setText("")
+        txtEmail.setText("")
+        txtPassword.setText("")
     }
 
     fun desactivarBotones(){
@@ -200,7 +215,6 @@ class MainActivity : AppCompatActivity() {
     private fun consultar(){
         codigos.clear()
         val intrapersonal = ArrayList<String>()
-        //val apis = "http://10.0.2.2/ws_agenda/persona.php"
         val campos = JSONObject()
         campos.put("accion", "consultar")
         val rq = Volley.newRequestQueue(this)
@@ -231,11 +245,11 @@ class MainActivity : AppCompatActivity() {
             { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
         rq.add(jsoresp)
     }
-    private fun verificar_cedula(cedula:String){
 
+    private fun verificar_cedula(cedula:String){
         val campos = JSONObject()
         campos.put("accion", "verificar_cedula")
-        campos.put("codigo", cedula)
+        campos.put("cedula", cedula)
         val rq = Volley.newRequestQueue(this)
         val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos,
             {
@@ -244,8 +258,30 @@ class MainActivity : AppCompatActivity() {
                     val obj = (s)
                     if(obj.getBoolean("estado")){
                         Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                        limpiaDatos()
                     }
+                } catch (e: JSONException){
+                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
+                }
+            },
+            { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
+        rq.add(jsoresp)
+    }
 
+    private fun verificar_correo(correo:String){
+        val campos = JSONObject()
+        campos.put("accion", "verificar_correo")
+        campos.put("correo", correo)
+        val rq = Volley.newRequestQueue(this)
+        val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos,
+            {
+                    s->
+                try {
+                    val obj = (s)
+                    if(obj.getBoolean("estado")){
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                        limpiaDatos()
+                    }
                 } catch (e: JSONException){
                     Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
                 }
