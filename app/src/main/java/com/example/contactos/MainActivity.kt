@@ -291,7 +291,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun editar(codigo:String){
-        //val apis = "http://10.0.2.2/ws_agenda/persona.php"
         txtCodigo.setText(codigo)
         val campos = JSONObject()
         campos.put("accion", "dato")
@@ -326,7 +325,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insertar(){
-        //val apis = "http://10.0.2.2/ws_agenda/persona.php"
         val campos = JSONObject()
         campos.put("accion", "insertar")
         campos.put("nombre", txtNombre.text.toString())

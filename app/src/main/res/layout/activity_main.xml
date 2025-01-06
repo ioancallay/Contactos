@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Nombre"
+                android:text="@string/lbl_nombre"
                 android:textAlignment="inherit" />
 
             <EditText
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Apellido"
+                android:text="@string/lbl_apellido"
                 android:textAlignment="inherit" />
 
             <EditText
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Cedula"
+                android:text="@string/lbl_cedula"
                 android:textAlignment="inherit" />
 
             <EditText
@@ -115,7 +115,7 @@
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Email"
+                android:text="@string/lbl_email"
                 android:textAlignment="inherit" />
 
             <EditText
@@ -137,7 +137,7 @@
                 android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Contraseña"
+                android:text="@string/lbl_password"
                 android:textAlignment="inherit" />
 
             <EditText

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Contactos</string>
+    <string name="lbl_nombre">Nombre</string>
+    <string name="lbl_apellido">Apellido</string>
+    <string name="lbl_cedula">Cedula</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_password">Password</string>
+    <string name="btn_nuevo">Nuevo</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="btn_editar">Editar</string>
+    <string name="btn_borrar">Borrar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_loggin">Loggin</string>
+    <string name="lbl_usuario">Usuario</string>
+    <string name="lbl_loggin">Loggin</string>
 </resources>
