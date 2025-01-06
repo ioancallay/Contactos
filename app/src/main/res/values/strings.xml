@@ -13,4 +13,8 @@
     <string name="btn_loggin">Loggin</string>
     <string name="lbl_usuario">Usuario</string>
     <string name="lbl_loggin">Loggin</string>
+    <string name="lbl_misContactos">Mis contactos</string>
+    <string name="lbl_telefono">Telefono</string>
+    <string name="list_contactos">Lista de contactos</string>
+    <string name="list_personas">Lista de personsas</string>
 </resources>

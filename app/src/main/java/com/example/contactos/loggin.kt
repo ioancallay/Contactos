@@ -1,5 +1,6 @@
 package com.example.contactos
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -44,7 +45,7 @@ class loggin : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Ingrese la contraseña", Toast.LENGTH_SHORT).show()
                 }
                 else->{
-                    check_loggin(txtUsuario.text.toString(), txtPasswd.text.toString())
+                    login(txtUsuario.text.toString(), txtPasswd.text.toString())
                 }
             }
         }
@@ -56,33 +57,34 @@ class loggin : AppCompatActivity() {
         btnLogin = findViewById(R.id.btn_login)
     }
 
-    private fun check_loggin(email: String, passwd:String){
+    private fun login(email: String, passwd:String){
         val campos = JSONObject()
         campos.put("accion", "login")
         campos.put("email", email)
         campos.put("password", passwd)
-
         val rq = Volley.newRequestQueue(this)
         val jsoresp = JsonObjectRequest(Request.Method.POST, apis, campos,
-        {
-            s->
-            try {
-                val obj = (s)
-                if (obj.getBoolean("estado")){
-                    val array = obj.getJSONArray("data")
-                    val dato = array.getJSONObject(0)
-                    Toast.makeText(applicationContext, obj.getString("response"), Toast.LENGTH_SHORT).show()
+            {
+                    s->
+                try {
+                    val obj = (s)
+                    if(obj.getBoolean("estado")){
+                        val array = obj.getJSONArray("data")
+                        val dato = array.getJSONObject(0)
+                        //val dato = obj.getJSONObject(0)
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                        val form2 = Intent(this, MainActivity::class.java)
+                        startActivity(form2)
+                    }
+                    else{
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                    }
 
-                } else {
-                    Toast.makeText(applicationContext, obj.getString("response"), Toast.LENGTH_SHORT).show()
+                } catch (e: JSONException){
+                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
                 }
-            } catch (e: JSONException){
-                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-        }, {
-            volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_SHORT).show()
-        })
+            },
+            { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
         rq.add(jsoresp)
     }
 }
