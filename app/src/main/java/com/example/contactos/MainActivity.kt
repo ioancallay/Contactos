@@ -310,7 +310,7 @@ class MainActivity : AppCompatActivity() {
                         txtCedula.setText(dato.getString("cedula"))
                         txtEmail.setText(dato.getString("correo"))
                         txtPassword.setText(dato.getString("clave"))
-
+                        consultar()
                     }
                     else{
                         Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
