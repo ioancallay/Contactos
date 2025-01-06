@@ -21,7 +21,7 @@ class loggin : AppCompatActivity() {
     lateinit var txtPasswd: EditText
     lateinit var btnLogin: Button
 
-    val apis:String = "https://agenda.ioasystem.com/loggin.php"
+    val apis:String = "https://agenda.ioasystem.com/login.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

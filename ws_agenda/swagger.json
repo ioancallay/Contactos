@@ -1,0 +1,537 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Agenda API",
+    "description": "API para gestionar personas y contactos.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://ws_agenda.test",
+      "description": "Servidor principal"
+    }
+  ],
+  "paths": {
+    "/persona.php/consultar": {
+      "post": {
+        "summary": "Consultar personas",
+        "description": "Obtiene una lista de personas registradas en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["consultar"],
+                    "description": "Acción para consultar personas."
+                  }
+                },
+                "required": ["accion"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lista de personas obtenida exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persona.php/verificar_cedula": {
+      "post": {
+        "summary": "Consultar cedula",
+        "description": "Verifica un número de cedula registrada en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["verificar_cedula"],
+                    "description": "Acción para consultar cedulas."
+                  },
+                  "cedula": {
+                    "type": "string",
+                    "description": "Cedula de la persona."
+                  }
+                },
+                "required": ["accion", "verificar_cedula"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Número de cedula encontrado en la base.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persona.php/dato": {
+      "post": {
+        "summary": "Consultar personas",
+        "description": "Obtiene una lista de personas registradas en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["dato"],
+                    "description": "Acción para consultar personas."
+                  },
+                  "codigo": {
+                    "type": "string",
+                    "description": "Código de la persona."
+                  }
+                },
+                "required": ["accion", "codigo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lista de personas obtenida exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persona.php/insertar": {
+      "post": {
+        "summary": "Insertar persona",
+        "description": "Agrega una nueva persona a la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["insertar"],
+                    "description": "Acción para insertar una persona."
+                  },
+                  "nombre": {
+                    "type": "string",
+                    "description": "Nombre de la persona."
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "description": "Apellido de la persona."
+                  },
+                  "cedula": {
+                    "type": "string",
+                    "description": "Cédula de la persona."
+                  },
+                  "correo": {
+                    "type": "string",
+                    "description": "Correo de la persona."
+                  },
+                  "clave": {
+                    "type": "string",
+                    "description": "Clave de la persona."
+                  }
+                },
+                "required": [
+                  "accion",
+                  "nombre",
+                  "apellido",
+                  "cedula",
+                  "correo",
+                  "clave"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Persona insertada exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persona.php/actualizar": {
+      "post": {
+        "summary": "Actualizar persona",
+        "description": "Actualiza los datos de una persona existente en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["actualizar"],
+                    "description": "Acción para actualizar datos de una persona."
+                  },
+                  "codigo": {
+                    "type": "string",
+                    "description": "Código de la persona."
+                  },
+                  "nombre": {
+                    "type": "string",
+                    "description": "Nombre de la persona."
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "description": "Apellido de la persona."
+                  },
+                  "cedula": {
+                    "type": "string",
+                    "description": "Cédula de la persona."
+                  },
+                  "correo": {
+                    "type": "string",
+                    "description": "Correo de la persona."
+                  },
+                  "clave": {
+                    "type": "string",
+                    "description": "Clave de la persona."
+                  }
+                },
+                "required": [
+                  "accion",
+                  "codigo",
+                  "nombre",
+                  "apellido",
+                  "cedula",
+                  "correo",
+                  "clave"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Persona actualizada exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persona.php/eliminar": {
+      "post": {
+        "summary": "Eliminar persona",
+        "description": "Elimina una persona de la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["eliminar"],
+                    "description": "Acción para eliminar una persona."
+                  },
+                  "codigo": {
+                    "type": "string",
+                    "description": "Código de la persona."
+                  }
+                },
+                "required": ["accion", "codigo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Persona eliminada exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacto.php/consultar": {
+      "post": {
+        "summary": "Consultar contactos",
+        "description": "Obtiene una lista de contactos asociados a una persona en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["consultar"],
+                    "description": "Acción para consultar contactos."
+                  },
+                  "codigo": {
+                    "type": "string",
+                    "description": "Código de la persona asociada a los contactos."
+                  }
+                },
+                "required": ["accion", "codigo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lista de contactos obtenida exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacto.php/insertar": {
+      "post": {
+        "summary": "Insertar contacto",
+        "description": "Agrega un nuevo contacto asociado a una persona en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["insertar"],
+                    "description": "Acción para insertar un contacto."
+                  },
+                  "codigo": {
+                    "type": "string",
+                    "description": "Código de la persona asociada."
+                  },
+                  "nombre_contacto": {
+                    "type": "string",
+                    "description": "Nombre del contacto."
+                  },
+                  "apellido_contacto": {
+                    "type": "string",
+                    "description": "Apellido del contacto."
+                  },
+                  "telefono_contacto": {
+                    "type": "string",
+                    "description": "Teléfono del contacto."
+                  },
+                  "correo_contacto": {
+                    "type": "string",
+                    "description": "Correo del contacto."
+                  }
+                },
+                "required": [
+                  "accion",
+                  "codigo",
+                  "nombre_contacto",
+                  "apellido_contacto",
+                  "telefono_contacto",
+                  "correo_contacto"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contacto insertado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacto.php/actualizar": {
+      "post": {
+        "summary": "Actualizar contacto",
+        "description": "Actualiza los datos de un contacto en la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["actualizar"],
+                    "description": "Acción para actualizar datos de un contacto."
+                  },
+                  "codigo": {
+                    "type": "string",
+                    "description": "Código del contacto."
+                  },
+                  "nombre_contacto": {
+                    "type": "string",
+                    "description": "Nombre del contacto."
+                  },
+                  "apellido_contacto": {
+                    "type": "string",
+                    "description": "Apellido del contacto."
+                  },
+                  "telefono_contacto": {
+                    "type": "string",
+                    "description": "Teléfono del contacto."
+                  },
+                  "correo_contacto": {
+                    "type": "string",
+                    "description": "Correo del contacto."
+                  }
+                },
+                "required": [
+                  "accion",
+                  "codigo",
+                  "nombre_contacto",
+                  "apellido_contacto",
+                  "telefono_contacto",
+                  "correo_contacto"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contacto actualizado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacto.php/eliminar": {
+      "post": {
+        "summary": "Eliminar contacto",
+        "description": "Elimina un contacto de la base de datos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accion": {
+                    "type": "string",
+                    "enum": ["eliminar"],
+                    "description": "Acción para eliminar un contacto."
+                  },
+                  "codigo_contacto": {
+                    "type": "string",
+                    "description": "Código del contacto."
+                  }
+                },
+                "required": ["accion", "codigo_contacto"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contacto eliminado exitosamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Código HTTP de la respuesta."
+          },
+          "response": {
+            "type": "string",
+            "description": "Mensaje de la respuesta."
+          },
+          "estado": {
+            "type": "boolean",
+            "description": "Estado de la operación."
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Datos retornados (si corresponde)."
+          }
+        }
+      }
+    }
+  }
+}
