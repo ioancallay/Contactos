@@ -59,7 +59,7 @@ class contactos : AppCompatActivity() {
 
         var bundle = intent.extras
         var cod_persona = bundle?.getString("cod_persona").toString()
-        var fullname = bundle?.getString("full_name").toString()
+        var fullname = bundle?.getString("fullname").toString()
         lblTituloContacto.text = fullname
         txtCodigoPersona.setText(cod_persona)
                 //logs_error()
@@ -267,8 +267,8 @@ class contactos : AppCompatActivity() {
         campos.put("accion", "insertar")
         campos.put("nombre_contacto", txtNomContacto.text.toString())
         campos.put("apellido_contacto", txtApeContacto.text.toString())
-        campos.put("telefono_contacto", txtCorreoContacto.text.toString())
-        campos.put("correo_contacto", txtTelefonoContacto.text.toString())
+        campos.put("correo_contacto", txtCorreoContacto.text.toString())
+        campos.put("telefono_contacto", txtTelefonoContacto.text.toString())
         campos.put("cod_persona", txtCodigoPersona.text.toString())
 
         val rq = Volley.newRequestQueue(this)
@@ -279,6 +279,7 @@ class contactos : AppCompatActivity() {
                     val obj=(s)
                     if (obj.getBoolean("estado")){
                         Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()
+                        todosContactos()
                     }
                     else{
                         Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()

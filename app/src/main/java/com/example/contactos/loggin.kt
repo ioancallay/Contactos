@@ -20,6 +20,7 @@ class loggin : AppCompatActivity() {
     lateinit var txtUsuario: EditText
     lateinit var txtPasswd: EditText
     lateinit var btnLogin: Button
+    lateinit var btnRegistrar: Button
 
     val apis:String = "https://agenda.ioasystem.com/api_login.php"
 
@@ -34,6 +35,11 @@ class loggin : AppCompatActivity() {
         }
 
         mapeo()
+
+        btnRegistrar.setOnClickListener {
+            val form1 = Intent(this, MainActivity::class.java)
+            startActivity(form1)
+        }
 
         btnLogin.setOnClickListener {
             when{
@@ -54,6 +60,7 @@ class loggin : AppCompatActivity() {
         txtUsuario = findViewById(R.id.txt_usuario)
         txtPasswd = findViewById(R.id.txt_passwd)
         btnLogin = findViewById(R.id.btn_login)
+        btnRegistrar = findViewById(R.id.btn_registrar)
     }
 
     private fun login(email: String, passwd:String){
@@ -72,7 +79,7 @@ class loggin : AppCompatActivity() {
                         val dato = array.getJSONObject(0)
                         val cod_persona = dato.getString("cod_persona")
                         val full_name = dato.getString("nom_persona") + " " + dato.getString("ape_persona")
-                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()
                         val form2 = Intent(this, contactos::class.java)
                         val bundle = Bundle()
                         bundle.putString("cod_persona", cod_persona)
@@ -81,11 +88,11 @@ class loggin : AppCompatActivity() {
                         startActivity(form2)
                     }
                     else{
-                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_SHORT).show()
                     }
 
                 } catch (e: JSONException){
-                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
                 }
             },
             { volleyError-> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })

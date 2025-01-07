@@ -17,4 +17,5 @@
     <string name="lbl_telefono">Telefono</string>
     <string name="list_contactos">Lista de contactos</string>
     <string name="list_personas">Lista de personsas</string>
+    <string name="bnt_registrar">Nueva cuenta</string>
 </resources>

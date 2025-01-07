@@ -88,6 +88,12 @@
                 android:text="@string/btn_loggin" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_registrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bnt_registrar" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
