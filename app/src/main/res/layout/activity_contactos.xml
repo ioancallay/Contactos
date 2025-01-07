@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/lbl_titulo_contacto"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -30,6 +30,36 @@
                 android:textAlignment="center"
                 android:textColor="#2196F3"
                 android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/txt_cod_persona"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/txt_cod_contacto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Contactos"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -136,7 +166,7 @@
                 android:text="@string/btn_guardar" />
 
             <Button
-                android:id="@+id/btn_actualizar"
+                android:id="@+id/btn_actualizar_con"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

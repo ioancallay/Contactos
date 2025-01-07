@@ -9,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
@@ -22,7 +21,7 @@ class loggin : AppCompatActivity() {
     lateinit var txtPasswd: EditText
     lateinit var btnLogin: Button
 
-    val apis:String = "https://agenda.ioasystem.com/login.php"
+    val apis:String = "https://agenda.ioasystem.com/api_login.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,9 +70,14 @@ class loggin : AppCompatActivity() {
                     if(obj.getBoolean("estado")){
                         val array = obj.getJSONArray("data")
                         val dato = array.getJSONObject(0)
-                        //val dato = obj.getJSONObject(0)
+                        val cod_persona = dato.getString("cod_persona")
+                        val full_name = dato.getString("nom_persona") + " " + dato.getString("ape_persona")
                         Toast.makeText(applicationContext, obj.getString("response").toString(), Toast.LENGTH_LONG).show()
-                        val form2 = Intent(this, MainActivity::class.java)
+                        val form2 = Intent(this, contactos::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("cod_persona", cod_persona)
+                        bundle.putString("fullname", full_name)
+                        form2.putExtras(bundle)
                         startActivity(form2)
                     }
                     else{
